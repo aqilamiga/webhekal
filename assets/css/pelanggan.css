@@ -1,0 +1,100 @@
+/* Wrapper halaman pelanggan */
+.customer-page {
+    padding: 20px 40px;
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Judul */
+.customer-page h2 {
+    margin-bottom: 25px;
+}
+
+/* Search box */
+.customer-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f1f1f1;
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+.customer-search,
+#result,
+#detail {
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.customer-search input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+}
+
+.customer-search button {
+    background: #4d4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+/* Hasil tabel */
+#result {
+    margin-top: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* Detail */
+#detail {
+    margin-top: 25px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+/* Biar tabelnya rapi */
+#result table, 
+#detail table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#result th, #result td,
+#detail th, #detail td {
+    padding: 12px 10px;
+    text-align: left;
+}
+
+#result tr:nth-child(even),
+#detail tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+#result tr:hover,
+#detail tr:hover {
+    background: #f1f1f1;
+}
+.content {
+    margin-left: 90px; /* sesuaikan dengan lebar sidebar kamu */
+    padding: 20px;
+}
+@media (max-width: 880px) {
+    .customer-wrapper {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .customer-left,
+    .customer-right {
+        width: 100% !important;
+    }
+}
