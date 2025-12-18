@@ -1,6 +1,6 @@
 <?php
 
-require_once 'connect.php';
+require_once 'not-to-show/connect.php';
 
 if (isset($_POST['submit'])) {
     $nama = $_POST['nama'];
@@ -31,6 +31,10 @@ if (isset($_POST['submit'])) {
         <?php include 'sidebar.php'; ?>
         <main class="content">
             
+            <details>
+                <summary>Rectangle</summary>
+                <p>botak aja udah.</p>
+            </details>
         </main>
     </div>
 

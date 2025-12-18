@@ -20,11 +20,11 @@
             </div>
 
             <nav class="nav">
-                <a class="nav-item" href="input_costumer.php">📝 Input Costumer</a>
-                <a class="nav-item" href="klasifikasi.php">🧑‍🔬 Klasifikasi Costumer</a>
+                <a class="nav-item" href="datapelanggan.php">📝 Cari dan Input Customer</a>
+                <a class="nav-item" href="klasifikasi.php">🧑‍🔬 Klasifikasi Customer</a>
                 <a class="nav-item" href="haircut.php">💇‍♂️ Rekomendasi Model Rambut</a>
-                <a class="nav-item" href="data_costumer.php">📇 Data Costumer</a>
-                <a class="nav-item" href="akses_kapster.php">🔐 Record Akses Kapster</a>
+                <a class="nav-item" href="datapelanggan.php">📇 Data Customer</a>
+                <a class="nav-item" href="datakapster.php">🔐 Record Akses Kapster</a>
             </nav>
 
             <!-- BAGIAN LOGOUT PALING BAWAH -->
