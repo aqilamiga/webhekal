@@ -31,10 +31,6 @@ if (isset($_POST['submit'])) {
         <?php include 'sidebar.php'; ?>
         <main class="content">
             
-            <details>
-                <summary>Rectangle</summary>
-                <p>botak aja udah.</p>
-            </details>
         </main>
     </div>
 

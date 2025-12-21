@@ -21,9 +21,8 @@
 
             <nav class="nav">
                 <a class="nav-item" href="datapelanggan.php">📝 Cari dan Input Customer</a>
-                <a class="nav-item" href="klasifikasi.php">🧑‍🔬 Klasifikasi Customer</a>
                 <a class="nav-item" href="haircut.php">💇‍♂️ Rekomendasi Model Rambut</a>
-                <a class="nav-item" href="datapelanggan.php">📇 Data Customer</a>
+                <a class="nav-item" href="caripelanggan.php">📇 Data Customer</a>
                 <a class="nav-item" href="datakapster.php">🔐 Record Akses Kapster</a>
             </nav>
 
