@@ -1,5 +1,6 @@
 <?php
 require_once 'not-to-show/connect.php';
+require_once 'not-to-show/auth.php';
 
 // proses insert pelanggan
 if (isset($_POST['submit'])) {
@@ -121,7 +122,7 @@ if (isset($_POST['submit'])) {
                 <h2>Data Customer</h2>
 
                 <div class="customer-search">
-                    <input type="text" id="search" placeholder="Nama Customer">
+                    <input type="text" id="search" placeholder="Pilih Nama Customer">
                     <button id="btnSearch">🔍</button>
                 </div>
 

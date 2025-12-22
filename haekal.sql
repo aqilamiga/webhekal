@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2025 at 09:59 AM
+-- Generation Time: Dec 22, 2025 at 05:21 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,7 +43,8 @@ CREATE TABLE `deteksi_wajah` (
 
 CREATE TABLE `kapster` (
   `id` int(11) NOT NULL,
-  `nama` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `nama` varchar(100) DEFAULT NULL,
   `nomor_hp` varchar(25) NOT NULL,
   `jabatan` enum('owner','kapster') NOT NULL,
   `password` varchar(50) DEFAULT NULL
@@ -53,8 +54,9 @@ CREATE TABLE `kapster` (
 -- Dumping data for table `kapster`
 --
 
-INSERT INTO `kapster` (`id`, `nama`, `nomor_hp`, `jabatan`, `password`) VALUES
-(4, 'cihuyy', '08080808080', 'kapster', 'cihuyyy');
+INSERT INTO `kapster` (`id`, `username`, `nama`, `nomor_hp`, `jabatan`, `password`) VALUES
+(4, 'cihuyy', NULL, '08080808080', 'kapster', 'cihuyyy'),
+(15, 'patrick', NULL, '080808080888', 'owner', 'cihuy');
 
 -- --------------------------------------------------------
 
@@ -179,7 +181,7 @@ ALTER TABLE `deteksi_wajah`
 -- AUTO_INCREMENT for table `kapster`
 --
 ALTER TABLE `kapster`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `model_rambut`

@@ -1,0 +1,15 @@
+
+
+owner:
+
+datafullkapster
+tambahkapster
+caripelanggan (bisa hapus data pelanggan)
+datapelanggan
+haircut
+
+kapster:
+datakapster
+caripelanggan (tidak bisa hapus data pelanggan)
+datapelanggan
+haircut

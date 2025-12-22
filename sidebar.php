@@ -1,3 +1,11 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$nama = $_SESSION["nama"];
+$role = $_SESSION['role'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,17 +22,29 @@
             <div class="user-card">
                 <div class="avatar">👤</div>
                 <div>
-                    <div class="role">Admin</div>
-                    <div class="sub">Main Navigation</div>
+                    <div class="role"><?= htmlspecialchars($nama) ?></div>
+                    <div class="sub"><?= ucfirst(htmlspecialchars($role)) ?></div>
                 </div>
             </div>
 
+            <?php if ($role === "owner"): ?>
             <nav class="nav">
-                <a class="nav-item" href="datapelanggan.php">📝 Cari dan Input Customer</a>
+                <a class="nav-item" href="datapelanggan.php">📝 Input dan Pilih Customer</a>
                 <a class="nav-item" href="haircut.php">💇‍♂️ Rekomendasi Model Rambut</a>
                 <a class="nav-item" href="caripelanggan.php">📇 Data Customer</a>
-                <a class="nav-item" href="datakapster.php">🔐 Record Akses Kapster</a>
+                <a class="nav-item" href="fullkapster.php">🔐 Record Akses Kapster</a>
+                <a class="nav-item" href="tambahkapster.php">🔐 Tambah Akses Kapster</a>
             </nav>
+            
+            <?php elseif ($role === "kapster"): ?>
+            <nav class="nav">
+                <a class="nav-item" href="datapelanggan.php">📝 Input dan Pilih Customer</a>
+                <a class="nav-item" href="haircut.php">💇‍♂️ Rekomendasi Model Rambut</a>
+                <a class="nav-item" href="caripelanggan.php">📇 Data Customer</a>
+                <a class="nav-item" href="pribadikapster.php">🔐 Data Pribadi Kapster</a>
+            </nav>
+
+            <?php endif; ?>
 
             <!-- BAGIAN LOGOUT PALING BAWAH -->
             <a href="logout.php" class="logout-btn">
