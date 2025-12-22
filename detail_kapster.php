@@ -1,77 +1,116 @@
 <?php
 require_once 'not-to-show/connect.php';
 
-$id = intval($_GET['id']);
+if (!isset($_GET['id'])) {
+    echo "<p>ID kapster tidak valid.</p>";
+    exit;
+}
 
-$sql = "SELECT * FROM kapster WHERE id = $id";
-$result = mysqli_query($conn, $sql);
+$id_kapster = (int) $_GET['id'];
 
-if (!$data = mysqli_fetch_assoc($result)) {
+/* =========================
+   AMBIL DATA KAPSTER
+   ========================= */
+$qKapster = mysqli_query(
+    $conn,
+    "SELECT id, nama, nomor_hp, jabatan 
+     FROM kapster 
+     WHERE id = $id_kapster"
+);
+
+$kapster = mysqli_fetch_assoc($qKapster);
+
+if (!$kapster) {
     echo "<p>Data kapster tidak ditemukan.</p>";
     exit;
 }
+
+/* =========================
+   TOTAL POTONG RAMBUT
+   ========================= */
+$qTotal = mysqli_query(
+    $conn,
+    "SELECT COUNT(*) AS total 
+     FROM riwayat_kapster 
+     WHERE id_kapster = $id_kapster"
+);
+
+$total = mysqli_fetch_assoc($qTotal)['total'] ?? 0;
+
+/* =========================
+   RIWAYAT POTONG
+   ========================= */
+$qRiwayat = mysqli_query(
+    $conn,
+    "SELECT 
+        pelanggan.nama AS nama_pelanggan,
+        riwayat_kapster.created_at
+     FROM riwayat_kapster
+     JOIN pelanggan 
+        ON pelanggan.id = riwayat_kapster.id_pelanggan
+     WHERE riwayat_kapster.id_kapster = $id_kapster
+     ORDER BY riwayat_kapster.created_at DESC"
+);
 ?>
 
 <style>
-    .detail-card {
-        margin-top: 20px;
-        padding: 20px;
-        background: #f7f7f7;
-        border-radius: 12px;
-        max-width: 400px;
-    }
-
-    .detail-card h3 {
-        margin-bottom: 15px;
-        font-size: 18px;
-        color: #333;
-    }
-
-    .detail-row {
-        margin-bottom: 10px;
-        font-size: 14px;
-    }
-
-    .detail-row strong {
-        display: inline-block;
-        width: 90px;
-        color: #555;
-    }
-
-    .btn-danger {
-        margin-top: 15px;
-        padding: 10px 14px;
-        background: #e74c3c;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        cursor: pointer;
-        font-size: 14px;
-    }
-
-    .btn-danger:hover {
-        background: #c0392b;
-    }
+.detail-card {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f7f7f7;
+    border-radius: 12px;
+    max-width: 500px;
+}
+.detail-row {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+.detail-row strong {
+    display: inline-block;
+    width: 140px;
+}
+.riwayat-list {
+    margin-top: 15px;
+    font-size: 14px;
+}
+.riwayat-item {
+    padding: 6px 0;
+    border-bottom: 1px solid #ddd;
+}
 </style>
 
 <div class="detail-card">
     <h3>Detail Kapster</h3>
 
     <div class="detail-row">
-        <strong>Nama</strong>: <?= htmlspecialchars($data['nama']) ?>
+        <strong>Nama</strong>: <?= htmlspecialchars($kapster['nama']) ?>
     </div>
 
     <div class="detail-row">
-        <strong>No HP</strong>: <?= htmlspecialchars($data['nomor_hp']) ?>
+        <strong>No HP</strong>: <?= htmlspecialchars($kapster['nomor_hp']) ?>
     </div>
 
     <div class="detail-row">
-        <strong>Jabatan</strong>: <?= htmlspecialchars($data['jabatan']) ?>
+        <strong>Jabatan</strong>: <?= htmlspecialchars($kapster['jabatan']) ?>
     </div>
 
-    <form action="../webhekal/not-to-show/hapus_kapster.php" method="POST"
-          onsubmit="return confirm('Yakin ingin menghapus kapster ini? Data tidak bisa dikembalikan!');">
-        <input type="hidden" name="id" value="<?= $data['id'] ?>">
-        <button type="submit" class="btn-danger">Hapus Kapster</button>
-    </form>
+    <div class="detail-row">
+        <strong>Total Potong Rambut</strong>: <?= $total ?>
+    </div>
+
+    <h4>Riwayat Potong</h4>
+
+    <div class="riwayat-list">
+        <?php if (mysqli_num_rows($qRiwayat) > 0): ?>
+            <?php while ($r = mysqli_fetch_assoc($qRiwayat)): ?>
+                <div class="riwayat-item">
+                    <?= htmlspecialchars($r['nama_pelanggan']) ?>
+                    <br>
+                    <small><?= $r['created_at'] ?></small>
+                </div>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <p>Belum ada riwayat potong.</p>
+        <?php endif; ?>
+    </div>
 </div>

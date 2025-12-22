@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2025 at 09:46 AM
+-- Generation Time: Dec 22, 2025 at 03:01 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -123,6 +123,20 @@ CREATE TABLE `riwayat_model_rambut` (
   `waktu` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `riwayat_potong`
+--
+
+CREATE TABLE `riwayat_potong` (
+  `id_riwayat` int(11) NOT NULL,
+  `id_customer` int(11) NOT NULL,
+  `id_kapster` int(11) NOT NULL,
+  `id_haircut` int(11) NOT NULL,
+  `tanggal` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -169,6 +183,12 @@ ALTER TABLE `riwayat_model_rambut`
   ADD KEY `id_model_rambut` (`id_model_rambut`);
 
 --
+-- Indexes for table `riwayat_potong`
+--
+ALTER TABLE `riwayat_potong`
+  ADD PRIMARY KEY (`id_riwayat`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -207,6 +227,12 @@ ALTER TABLE `riwayat_kapster`
 --
 ALTER TABLE `riwayat_model_rambut`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `riwayat_potong`
+--
+ALTER TABLE `riwayat_potong`
+  MODIFY `id_riwayat` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
