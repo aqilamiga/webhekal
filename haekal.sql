@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2025 at 05:21 AM
+-- Generation Time: Dec 22, 2025 at 09:46 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -56,7 +56,8 @@ CREATE TABLE `kapster` (
 
 INSERT INTO `kapster` (`id`, `username`, `nama`, `nomor_hp`, `jabatan`, `password`) VALUES
 (4, 'cihuyy', NULL, '08080808080', 'kapster', 'cihuyyy'),
-(15, 'patrick', NULL, '080808080888', 'owner', 'cihuy');
+(15, 'admin', 'Admin', '0888808000', 'owner', 'admin'),
+(19, 'login', 'Login', '45909098408', 'kapster', 'login');
 
 -- --------------------------------------------------------
 
@@ -181,7 +182,7 @@ ALTER TABLE `deteksi_wajah`
 -- AUTO_INCREMENT for table `kapster`
 --
 ALTER TABLE `kapster`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `model_rambut`
