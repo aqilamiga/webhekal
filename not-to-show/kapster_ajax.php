@@ -16,7 +16,7 @@ if (mysqli_num_rows($result) == 0) {
     exit;
 }
 
-echo "<table>";
+echo "<table class='kapster-table'>";
 echo "<tr><th>Nama</th><th>Nomor HP</th></tr>";
 
 while ($row = mysqli_fetch_assoc($result)) {

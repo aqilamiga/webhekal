@@ -67,3 +67,53 @@
 .kapster-result-item:hover {
     background: #eaeaea;
 }
+
+.kapster-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.kapster-table thead tr{
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.kapster-table th,
+.kapster-table td {
+    padding: 12px 14px;
+    text-align: left;
+}
+
+.kapster-table th {
+    font-weight: 600;
+    color: #444;
+}
+
+.kapster-table tbody tr {
+    cursor: pointer;
+    border-bottom: 1px solid #dddddd;
+    transition: background 0.2s;
+}
+
+.kapster-table tbody tr:hover {
+    background: #f0f0f0;
+}
+
+.kapster-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.empty-msg {
+    margin-top: 12px;
+    color: #777;
+    font-size: 14px;
+}

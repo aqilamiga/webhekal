@@ -1,11 +1,11 @@
 
-
 owner:
 
 datafullkapster
 tambahkapster
 caripelanggan (bisa hapus data pelanggan)
 datapelanggan
+tambahhaircut
 haircut
 
 kapster:

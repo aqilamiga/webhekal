@@ -12,36 +12,35 @@ $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $nama     = trim($_POST['nama'] ?? '');
+    $username = trim($_POST['username'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
-    if ($nama === '' || $password === '') {
-        $error = 'Nama dan password wajib diisi';
+    if ($username === '' || $password === '') {
+        $error = 'Username dan password wajib diisi';
     } else {
 
         $stmt = $conn->prepare(
-            "SELECT id, nama, jabatan, password FROM kapster WHERE nama = ? LIMIT 1"
+            "SELECT id, nama, jabatan, password 
+     FROM kapster 
+     WHERE username = ? 
+     LIMIT 1"
         );
 
         if (!$stmt) {
             die("Query error: " . $conn->error);
         }
-        $stmt->bind_param("s", $nama);
+        $stmt->bind_param("s", $username);
         $stmt->execute();
         $result = $stmt->get_result();
 
         if ($result->num_rows === 1) {
             $user = $result->fetch_assoc();
-
-            // ===============================
-            // PASSWORD CHECK (PLAINTEXT)
-            // ===============================
             if ($password === $user['password']) {
 
                 // SESSION WAJIB LENGKAP
                 $_SESSION['user_id'] = $user['id'];
-                $_SESSION['nama']    = $user['nama'];
-                $_SESSION['role']    = $user['jabatan'];
+                $_SESSION['nama'] = $user['nama'];
+                $_SESSION['role'] = $user['jabatan'];
 
                 // REGENERATE SESSION (GOOD PRACTICE)
                 session_regenerate_id(true);
@@ -76,8 +75,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p style="color:red; margin:10px 0;"> <?= htmlspecialchars($error) ?>
                     </p>
                 <?php endif; ?>
-                <input type="text" name="nama" placeholder="Nama" required>
-                <input type="password" name="password" placeholder="Password"required>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
                 <a href="#">Jika lupa password, hubungi staf</a>
                 <button type="submit">Masuk</button>
             </form>

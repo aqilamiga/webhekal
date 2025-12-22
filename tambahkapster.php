@@ -1,67 +1,114 @@
 <?php
+require_once 'not-to-show/connect.php';
+require_once 'not-to-show/auth.php';
 
-require_once './not-to-show/connect.php';
-
+// proses simpan kapster
 if (isset($_POST['submit'])) {
+    $nama     = $_POST['nama'];
     $username = $_POST['username'];
-    $nama = $_POST['nama'];
-    $nomor_hp = $_POST['nomor_hp'];
-    $jabatan = $_POST['jabatan'];
+    $hp       = $_POST['nomor_hp'];
+    $jabatan  = $_POST['jabatan'];
     $password = $_POST['password'];
-    $sql = "INSERT INTO kapster (username, nama, nomor_hp, jabatan, password) VALUES ('$username', '$nama', '$nomor_hp', '$jabatan', '$password')";
+
+    $sql = "INSERT INTO kapster (nama, username, nomor_hp, jabatan, password)
+            VALUES ('$nama', '$username', '$hp', '$jabatan', '$password')";
 
     if (mysqli_query($conn, $sql)) {
-        echo "<script>alert('Data kapster berhasil ditambahkan.'); window.location.href='tes.php';</script>";
+        echo "<script>alert('Kapster berhasil ditambahkan');location.href='fullkapster.php';</script>";
     } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo mysqli_error($conn);
     }
 }
-
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Register Akun</title>
-  <link rel="stylesheet" href="./assets/css/test.css" />
+    <meta charset="UTF-8">
+    <title>Tambah Kapster</title>
+    <link rel="stylesheet" href="./assets/css/pelanggan.css">
+
+    <style>
+        /* === LAYOUT LEBAR SEPERTI DATAPELANGGAN === */
+        .wide-wrapper {
+            display: flex;
+            gap: 50px;
+            align-items: flex-start;
+            padding-right: 50px;
+        }
+
+        .wide-left {
+            width: 420px;
+        }
+
+        .wide-right {
+            flex: 1;
+        }
+
+        .register label {
+            display: block;
+            margin-top: 14px;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .register input,
+        .register select {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #f1f1f1;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .register button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background: #a7a7a7;
+            border: none;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .register button:hover {
+            background: #8e8e8e;
+        }
+    </style>
 </head>
 
 <body>
-  <div class="container">
+
 <?php include 'sidebar.php'; ?>
-    <main class="content">
-      <section class="card header-card">
-        <form id="kapsterForm" class="register" autocomplete="off" action="tes.php" method="POST">
-          <label class="field-label">Nama Kapster</label>
-          <input type="text" name="nama" id="nama" class="text-input" placeholder="Nama lengkap" />
 
-          <label class="field-label">Nomor HP</label>
-          <input type="text" name="nomor_hp" id="nomor_hp" class="text-input" placeholder="Isikan nomor HP 11-12 digit" />
-
-          <label class="field-label">Jabatan</label>
-          <div class="select-input-wrapper">
-            <select name="jabatan" id="jabatan" class="select-input">
-              <option value="" disabled selected>Pilih posisi</option>
-              <option value="owner">Owner</option>
-              <option value="kapster">Kapster</option>
-            </select>
-          </div>
-
-          <label class="field-label">Password</label>
-          <input type="password" name="password" id="password" class="text-input" placeholder="**********" />
-          <p id="errorMessage" style="color:red; font-size:14px; display:none; margin-top:10px;"></p>
-
-          <div class="actions">
-            <button type="submit" name="submit" class="btn-primary">Daftar</button>
-          </div>
-        </form>
-      </section>
-    </main>
-  </div>
-<script src="script.js"></script>
+<main class="content">
+    <div class="wide-wrapper">
+        <div class="wide-left">
+            <div class="card">
+                <h2>Tambah Kapster</h2>
+                <form method="POST" class="register" autocomplete="off">
+                    <label>Nama Lengkap</label>
+                    <input type="text" name="nama" required>
+                    <label>Username</label>
+                    <input type="text" name="username" required>
+                    <label>Nomor HP</label>
+                    <input type="text" name="nomor_hp" placeholder="11–12 digit" required>
+                    <label>Jabatan</label>
+                    <select name="jabatan" required>
+                        <option value="">Pilih posisi</option>
+                        <option value="owner">Owner</option>
+                        <option value="kapster">Kapster</option>
+                    </select>
+                    <label>Password</label>
+                    <input type="password" name="password" required>
+                    <button type="submit" name="submit">Daftar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
 </body>
-
 </html>

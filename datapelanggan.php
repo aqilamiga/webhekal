@@ -31,6 +31,9 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="./assets/css/pelanggan.css" />
 
     <style>
+        :root{
+                --bg: #f7f7f8;
+        }
         .customer-wrapper {
             display: flex;
             gap: 50px;

@@ -33,7 +33,7 @@ $role = $_SESSION['role'];
                 <a class="nav-item" href="haircut.php">💇‍♂️ Rekomendasi Model Rambut</a>
                 <a class="nav-item" href="caripelanggan.php">📇 Data Customer</a>
                 <a class="nav-item" href="fullkapster.php">🔐 Record Akses Kapster</a>
-                <a class="nav-item" href="tambahkapster.php">🔐 Tambah Akses Kapster</a>
+                <a class="nav-item" href="tambahkapster.php">➕ Tambah Akses Kapster</a>
             </nav>
             
             <?php elseif ($role === "kapster"): ?>
@@ -41,13 +41,13 @@ $role = $_SESSION['role'];
                 <a class="nav-item" href="datapelanggan.php">📝 Input dan Pilih Customer</a>
                 <a class="nav-item" href="haircut.php">💇‍♂️ Rekomendasi Model Rambut</a>
                 <a class="nav-item" href="caripelanggan.php">📇 Data Customer</a>
-                <a class="nav-item" href="pribadikapster.php">🔐 Data Pribadi Kapster</a>
+                <a class="nav-item" href="profilkapster.php">🔐 Data Pribadi Kapster</a>
             </nav>
 
             <?php endif; ?>
 
             <!-- BAGIAN LOGOUT PALING BAWAH -->
-            <a href="logout.php" class="logout-btn">
+            <a href="not-to-show/logout.php" class="logout-btn">
                 <span class="nav-icon">⎋</span>
                 Logout
             </a>

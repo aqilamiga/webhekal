@@ -1,3 +1,10 @@
+<?php
+
+require_once 'not-to-show/connect.php';
+require_once 'not-to-show/auth.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
