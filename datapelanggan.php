@@ -30,9 +30,10 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="./assets/css/test.css" />
     <link rel="stylesheet" href="./assets/css/pelanggan.css" />
     <style>
-        :root{
-                --bg: #f7f7f8;
+        :root {
+            --bg: #f7f7f8;
         }
+
         .customer-wrapper {
             display: flex;
             gap: 50px;
@@ -42,12 +43,14 @@ if (isset($_POST['submit'])) {
 
         /* Kolom kiri 40% */
         .customer-left {
-            width: 40%;flex: 1;
+            width: 40%;
+            flex: 1;
         }
 
         /* Kolom kanan 60% */
         .customer-right {
-            width: 60%;flex: 1;
+            width: 60%;
+            flex: 1;
 
             /* Hilangkan card putih */
             background: transparent;
@@ -115,7 +118,7 @@ if (isset($_POST['submit'])) {
 
 <body>
     <?php include 'sidebar.php'; ?>
-    <main class="content">  
+    <main class="content">
         <div class="customer-wrapper">
             <!-- BAGIAN KIRI — DATA CUSTOMER -->
             <div class="customer-left">
@@ -152,19 +155,20 @@ if (isset($_POST['submit'])) {
         </div>
     </main>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
             const input = document.getElementById("search");
             const btn = document.getElementById("btnSearch");
             // tombol search
             btn.addEventListener("click", () => doSearch());
             // tekan ENTER untuk search
-            input.addEventListener("keypress", function (e) {
+            input.addEventListener("keypress", function(e) {
                 if (e.key === "Enter") {
                     e.preventDefault();
                     doSearch();
                 }
             });
+
             function doSearch() {
                 const keyword = input.value;
 
@@ -184,25 +188,32 @@ if (isset($_POST['submit'])) {
                     document.getElementById("detail").innerHTML = data;
                 });
         }
-function mulaiDeteksi() {
-    document.getElementById("status").innerText = "Sedang mendeteksi wajah...";
+        // fungsi mulai deteksi wajah via Raspberry Pi
+        function mulaiDeteksi() {
+            document.getElementById("status").innerText = "Mendeteksi wajah...";
 
-    fetch("./not-to-show/run_detect.php")
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                document.getElementById("status").innerText = "Deteksi berhasil!";
-                document.getElementById("hasil-foto").style.display = "block";
-                document.getElementById("hasil-foto").src = data.image;
-                document.getElementById("bentuk_wajah").value = data.face_shape;
-            } else {
-                document.getElementById("status").innerText = "Gagal mendeteksi wajah.";
-            }
-        })
-        .catch(err => {
-            document.getElementById("status").innerText = "Terjadi error.";
-        });
-}
+            fetch("http://127.0.0.1:5000/detect", {
+                    method: "POST"
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error("Server error");
+                    return res.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById("status").innerText = "Deteksi berhasil";
+                        document.getElementById("hasil-foto").src = data.image;
+                        document.getElementById("bentuk_wajah").value = data.face_shape;
+                    } else {
+                        document.getElementById("status").innerText = data.message ?? "Gagal mendeteksi wajah";
+                    }
+                })
+                .catch(err => {
+                    document.getElementById("status").innerText = "Server Raspberry tidak bisa diakses";
+                    console.error(err);
+                });
+        }
     </script>
 </body>
+
 </html>

@@ -33,28 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
-// untuk deteksi wajah
-function mulaiDeteksi() {
-    document.getElementById("status").innerText = "Sedang mendeteksi wajah...";
-
-    fetch("./not-to-show/run_detect.php")
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                document.getElementById("status").innerText = "Deteksi berhasil!";
-                document.getElementById("hasil-foto").style.display = "block";
-                document.getElementById("hasil-foto").src = data.image;
-                document.getElementById("bentuk_wajah").value = data.face_shape;
-            } else {
-                document.getElementById("status").innerText = "Gagal mendeteksi wajah.";
-            }
-        })
-        .catch(err => {
-            document.getElementById("status").innerText = "Terjadi error.";
-        });
-}
-
 // untuk data kapster
 document.querySelectorAll('.kapster-header').forEach(header => {
     header.addEventListener('click', () => {
