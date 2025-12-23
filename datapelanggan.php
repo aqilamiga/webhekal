@@ -29,7 +29,6 @@ if (isset($_POST['submit'])) {
     <title>Pelanggan</title>
     <link rel="stylesheet" href="./assets/css/test.css" />
     <link rel="stylesheet" href="./assets/css/pelanggan.css" />
-
     <style>
         :root{
                 --bg: #f7f7f8;
@@ -118,9 +117,7 @@ if (isset($_POST['submit'])) {
     <?php include 'sidebar.php'; ?>
     <main class="content">  
         <div class="customer-wrapper">
-            <!-- ==============================
-                BAGIAN KIRI — DATA CUSTOMER
-            =============================== -->
+            <!-- BAGIAN KIRI — DATA CUSTOMER -->
             <div class="customer-left">
                 <h2>Data Customer</h2>
 
@@ -132,9 +129,7 @@ if (isset($_POST['submit'])) {
                 <div id="result"></div>
                 <div id="detail"></div>
             </div>
-            <!-- ==============================
-                BAGIAN KANAN — INPUT CUSTOMER
-            =============================== -->
+            <!-- BAGIAN KANAN — INPUT CUSTOMER -->
             <div class="customer-right">
                 <h2>Input Customer Baru</h2>
                 <form class="customer-form" autocomplete="off" method="POST">
@@ -155,7 +150,6 @@ if (isset($_POST['submit'])) {
                 </form>
             </div>
         </div>
-
     </main>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -190,11 +184,25 @@ if (isset($_POST['submit'])) {
                     document.getElementById("detail").innerHTML = data;
                 });
         }
-        function mulaiDeteksi() {
-            document.getElementById("status").innerText = "Mendeteksi wajah...";
-        }
+function mulaiDeteksi() {
+    document.getElementById("status").innerText = "Sedang mendeteksi wajah...";
+
+    fetch("./not-to-show/run_detect.php")
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById("status").innerText = "Deteksi berhasil!";
+                document.getElementById("hasil-foto").style.display = "block";
+                document.getElementById("hasil-foto").src = data.image;
+                document.getElementById("bentuk_wajah").value = data.face_shape;
+            } else {
+                document.getElementById("status").innerText = "Gagal mendeteksi wajah.";
+            }
+        })
+        .catch(err => {
+            document.getElementById("status").innerText = "Terjadi error.";
+        });
+}
     </script>
-
 </body>
-
 </html>

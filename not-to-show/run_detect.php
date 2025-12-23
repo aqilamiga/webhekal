@@ -1,20 +1,20 @@
 <?php
 header('Content-Type: application/json');
 
-// Jalankan Python
-$command = "python3 /home/pi/deteksi_wajah.py 2>&1";
+$command = "python3 /home/pi/yolov4tinyrpi4/detect_once.py 2>&1";
 $output = shell_exec($command);
 
-// Python akan return JSON string
-$result = json_decode($output, true);
+$result = json_decode(trim($output), true);
 
-if ($result) {
+if ($result && isset($result['success']) && $result['success']) {
     echo json_encode([
         "success" => true,
         "face_shape" => $result["face_shape"],
-        "image" => "captures/" . $result["image"]   // lokasi foto
+        "image" => "assets/img/captures/" . $result["image"]
     ]);
 } else {
-    echo json_encode(["success" => false]);
+    echo json_encode([
+        "success" => false,
+        "raw" => $output
+    ]);
 }
-?>

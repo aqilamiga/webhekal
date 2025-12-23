@@ -40,8 +40,9 @@ $role = $_SESSION['role'];
             <nav class="nav">
                 <a class="nav-item" href="datapelanggan.php">📝 Input dan Pilih Customer</a>
                 <a class="nav-item" href="haircut.php">💇‍♂️ Rekomendasi Model Rambut</a>
+                <a class="nav-item" href="list_haircut.php">💾 Data Haircut</a>
                 <a class="nav-item" href="caripelanggan.php">📇 Data Customer</a>
-                <a class="nav-item" href="profilkapster.php">🔐 Data Pribadi Kapster</a>
+                <a class="nav-item" href="riwayatkapster.php">🔐 Data Pribadi Kapster</a>
             </nav>
 
             <?php endif; ?>
