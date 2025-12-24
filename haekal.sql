@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2025 at 03:01 PM
+-- Generation Time: Dec 24, 2025 at 05:45 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -92,7 +92,12 @@ CREATE TABLE `pelanggan` (
 --
 
 INSERT INTO `pelanggan` (`id`, `nama`, `bentuk_wajah`, `created_at`, `hp_pelanggan`, `foto`) VALUES
-(4, 'lah aneh cok', 'commahair', '2025-12-11 03:39:34', '080808080800', 'fotonya nanti aja');
+(4, 'lah aneh cok', 'commahair', '2025-12-11 03:39:34', '080808080800', 'fotonya nanti aja'),
+(5, 'aimar', 'triangle', '2025-12-24 03:53:18', '08088848484', NULL),
+(6, 'login', 'triangle', '2025-12-24 04:07:25', '0804854654654', 'capture_1766549217.jpg'),
+(7, 'popopo', 'triangle', '2025-12-24 04:12:41', '0800080845', 'capture_1766549555.jpg'),
+(8, 'lagi lagi', 'triangle', '2025-12-24 04:16:56', '087484508787', 'capture_1766549807.jpg'),
+(9, 'afif', 'round', '2025-12-24 04:25:16', '08708908454658', 'capture_1766550312.jpg');
 
 -- --------------------------------------------------------
 
@@ -122,8 +127,6 @@ CREATE TABLE `riwayat_model_rambut` (
   `tanggal` date DEFAULT NULL,
   `waktu` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
 
 --
 -- Indexes for dumped tables
@@ -196,7 +199,7 @@ ALTER TABLE `model_rambut`
 -- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `riwayat_kapster`
