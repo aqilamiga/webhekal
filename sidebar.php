@@ -30,7 +30,7 @@ $role = $_SESSION['role'];
             <?php if ($role === "owner"): ?>
             <nav class="nav">
                 <a class="nav-item" href="datapelanggan.php">📝 Input dan Pilih Customer</a>
-                <a class="nav-item" href="haircut.php">💇‍♂️ Rekomendasi Model Rambut</a>
+                <a class="nav-item" href="rekomendasi.php">💇‍♂️ Rekomendasi Model Rambut</a>
                 <a class="nav-item" href="list_haircut.php">💾 Data Haircut</a>
                 <a class="nav-item" href="caripelanggan.php">📇 Data Customer</a>
                 <a class="nav-item" href="fullkapster.php">🔐 Record Akses Kapster</a>

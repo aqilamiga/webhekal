@@ -7,13 +7,14 @@ if (isset($_POST['submit'])) {
     $nama = $_POST['nama'];
     $hp_pelanggan = $_POST['hp_pelanggan'];
     $bentuk_wajah = $_POST['bentuk_wajah'];
+    $foto_path = $_POST['foto_path']; // Ambil nama file dari input hidden
 
-    $sql = "INSERT INTO pelanggan (nama, hp_pelanggan, bentuk_wajah)
-            VALUES ('$nama', '$hp_pelanggan', '$bentuk_wajah')";
+    // Masukkan foto ke query
+    $sql = "INSERT INTO pelanggan (nama, hp_pelanggan, bentuk_wajah, foto) 
+            VALUES ('$nama', '$hp_pelanggan', '$bentuk_wajah', '$foto_path')";
 
     if (mysqli_query($conn, $sql)) {
-        echo "<script>alert('Data pelanggan berhasil ditambahkan.');
-        window.location.href='pelanggan.php';</script>";
+        echo "<script>alert('Data pelanggan berhasil ditambahkan.'); window.location.href='haircut.php';</script>";
     } else {
         echo "Error: " . mysqli_error($conn);
     }
@@ -147,6 +148,7 @@ if (isset($_POST['submit'])) {
                         style="display:none; width:180px; margin-top:10px; border-radius:10px;" />
                     <label>Hasil Deteksi</label>
                     <input type="text" id="bentuk_wajah" name="bentuk_wajah" placeholder="Hasil otomatis" readonly>
+                    <input type="hidden" id="foto_path" name="foto_path">
                     <button type="submit" name="submit" class="btn-primary">
                         Daftar dan Rekomendasi Haircut
                     </button>
@@ -181,13 +183,10 @@ if (isset($_POST['submit'])) {
             }
         });
         // klik row → detail
-        function getDetail(id) {
-            fetch("detail_pelanggan.php?id=" + id)
-                .then(res => res.text())
-                .then(data => {
-                    document.getElementById("detail").innerHTML = data;
-                });
-        }
+function getDetail(id) {
+    // Ambil data pelanggan lalu arahkan ke haircut.php
+    window.location.href = "haircut.php?pelanggan_id=" + id;
+}
         // fungsi mulai deteksi wajah via Raspberry Pi
         function mulaiDeteksi() {
             document.getElementById("status").innerText = "Mendeteksi wajah...";
@@ -202,8 +201,10 @@ if (isset($_POST['submit'])) {
                 .then(data => {
                     if (data.success) {
                         document.getElementById("status").innerText = "Deteksi berhasil";
-                        document.getElementById("hasil-foto").src = data.image;
+                        // Ambil gambar dari server flask lokal
+                        document.getElementById("hasil-foto").src = "http://127.0.0.1:5000/images/" + data.image;
                         document.getElementById("bentuk_wajah").value = data.face_shape;
+                        document.getElementById("foto_path").value = data.image;
                     } else {
                         document.getElementById("status").innerText = data.message ?? "Gagal mendeteksi wajah";
                     }
