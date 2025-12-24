@@ -23,7 +23,7 @@ if (!$data = mysqli_fetch_assoc($result)) {
 $root_path = __DIR__; 
 $nama_file = $data['foto'];
 
-// Lokasi fisik untuk file_exists (Windows style)
+// Lokasi fisik untuk file_exists (Windows style) - jika beda pc, tambahkan public_html sebelum assets
 $file_fisik = $root_path . DIRECTORY_SEPARATOR . "assets" . DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "pelanggan" . DIRECTORY_SEPARATOR . $nama_file;
 
 // Lokasi URL untuk tag <img>
