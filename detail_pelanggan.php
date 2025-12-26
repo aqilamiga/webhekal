@@ -1,125 +1,94 @@
 <?php
 require_once 'not-to-show/connect.php';
+require_once 'not-to-show/auth.php';
 
-// Pastikan ID ada
+// Pastikan ada ID yang dikirim
 if (!isset($_GET['id'])) {
-    echo "ID tidak ditemukan.";
-    exit;
+    die("ID Pelanggan tidak ditemukan.");
 }
 
-$id = intval($_GET['id']);
+$id = mysqli_real_escape_string($conn, $_GET['id']);
 
-// Ambil data pelanggan
-$sql = "SELECT * FROM pelanggan WHERE id = $id";
-$result = mysqli_query($conn, $sql);
-
-if (!$data = mysqli_fetch_assoc($result)) {
-    echo "<p>Data pelanggan tidak ditemukan.</p>";
-    exit;
+// 1. Ambil data profil pelanggan
+$query = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id = '$id'");
+if (mysqli_num_rows($query) == 0) {
+    die("Data pelanggan tidak ditemukan.");
 }
+$p = mysqli_fetch_assoc($query);
 
-// --- PENGATURAN PATH GAMBAR ---
-// __DIR__ akan menghasilkan C:\xampp\htdocs\webhekal
-$root_path = __DIR__; 
-$nama_file = $data['foto'];
-
-// Lokasi fisik untuk file_exists (Windows style) - jika beda pc, tambahkan public_html sebelum assets
-$file_fisik = $root_path . DIRECTORY_SEPARATOR . "assets" . DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "pelanggan" . DIRECTORY_SEPARATOR . $nama_file;
-
-// Lokasi URL untuk tag <img>
-$url_gambar = "assets/img/pelanggan/" . $nama_file;
+// 2. Ambil riwayat pangkas dari tabel riwayat_model_rambut
+// Diurutkan berdasarkan yang terbaru (descending)
+$query_riwayat = mysqli_query($conn, "SELECT * FROM riwayat_model_rambut 
+                                     WHERE id_pelanggan = '$id' 
+                                     ORDER BY tanggal DESC, waktu DESC");
 ?>
 
 <style>
-    .detail-card {
-        margin-top: 20px;
-        padding: 20px;
-        background: #f7f7f7;
-        border-radius: 12px;
-        max-width: 400px;
-        font-family: sans-serif;
-    }
+    .detail-card { background: #fff; padding: 20px; border-radius: 12px; }
+    .profile-header { display: flex; gap: 20px; align-items: center; margin-bottom: 25px; }
+    .profile-header img { width: 120px; height: 120px; object-fit: cover; border-radius: 10px; border: 3px solid #f0f0f0; }
+    .info-text h3 { margin: 0; font-size: 20px; color: #333; }
+    .info-text p { margin: 5px 0; color: #666; font-size: 14px; }
+    .badge-shape { display: inline-block; background: #00B4D8; color: white; padding: 2px 10px; border-radius: 15px; font-size: 12px; font-weight: bold; }
 
-    .detail-card h3 {
-        margin-bottom: 15px;
-        font-size: 18px;
-        color: #333;
+    .history-section { margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px; }
+    .history-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    .history-table th { text-align: left; font-size: 12px; color: #999; text-transform: uppercase; padding: 10px; border-bottom: 2px solid #f5f5f5; }
+    .history-table td { padding: 12px 10px; font-size: 14px; border-bottom: 1px solid #f9f9f9; }
+    .model-name { font-weight: 600; color: #333; }
+    
+    .btn-new-order {
+        display: block; width: 100%; text-align: center; background: #333; color: #00B4D8;
+        padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 20px;
+        transition: 0.2s;
     }
-
-    .detail-row {
-        margin-bottom: 10px;
-        font-size: 14px;
-    }
-
-    .detail-row strong {
-        display: inline-block;
-        width: 100px;
-        color: #555;
-    }
-
-    .detail-img-wrapper {
-        margin-top: 15px;
-        background: #fff;
-        padding: 10px;
-        border-radius: 8px;
-        border: 1px solid #ddd;
-        text-align: center;
-    }
-
-    .detail-img {
-        width: 100%;
-        max-width: 300px;
-        border-radius: 5px;
-    }
-
-    .no-photo {
-        font-size: 12px;
-        color: #999;
-        padding: 20px;
-    }
-
-    .btn-danger {
-        margin-top: 15px;
-        padding: 10px 14px;
-        background: #e74c3c;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        cursor: pointer;
-        width: 100%;
-    }
+    .btn-new-order:hover { background: #000; }
 </style>
 
 <div class="detail-card">
-    <h3>Detail Pelanggan</h3>
-
-    <div class="detail-row">
-        <strong>Nama</strong>: <?= htmlspecialchars($data['nama']) ?>
+    <div class="profile-header">
+        <img src="assets/img/pelanggan/<?php echo htmlspecialchars($p['foto']); ?>" 
+             onerror="this.src='assets/img/no-image.jpg'">
+        <div class="info-text">
+            <h3><?= htmlspecialchars($p['nama']) ?></h3>
+            <p>📱 <?= htmlspecialchars($p['hp_pelanggan']) ?></p>
+            <p><span class="badge-shape"><?= htmlspecialchars($p['bentuk_wajah']) ?></span></p>
+        </div>
     </div>
 
-    <div class="detail-row">
-        <strong>No HP</strong>: <?= htmlspecialchars($data['hp_pelanggan']) ?>
-    </div>
-
-    <div class="detail-row">
-        <strong>Bentuk Wajah</strong>: <?= htmlspecialchars($data['bentuk_wajah']) ?>
-    </div>
-
-    <div class="detail-img-wrapper">
-        <?php if (!empty($nama_file) && file_exists($file_fisik)): ?>
-            <img src="<?= $url_gambar ?>" alt="Foto Wajah" class="detail-img">
+    <div class="history-section">
+        <h4 style="margin: 0; color: #333;">Riwayat Model Rambut</h4>
+        
+        <?php if (mysqli_num_rows($query_riwayat) > 0): ?>
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Tanggal & Waktu</th>
+                        <th>Model Rambut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while($h = mysqli_fetch_assoc($query_riwayat)): ?>
+                    <tr>
+                        <td>
+                            <div style="font-weight: 500;"><?= date('d/m/Y', strtotime($h['tanggal'])) ?></div>
+                            <div style="font-size: 11px; color: #aaa;"><?= $h['waktu'] ?></div>
+                        </td>
+                        <td>
+                            <span class="model-name"><?= htmlspecialchars($h['haircut']) ?></span>
+                        </td>
+                    </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
         <?php else: ?>
-            <div class="no-photo">
-                <b>Foto tidak ditemukan di folder.</b><br>
-                <small>Nama file di DB: <?= htmlspecialchars($nama_file) ?></small><br>
-                <small style="font-size: 10px; color: #cc0000;">Path dicari: <?= $file_fisik ?></small>
+            <div style="text-align: center; padding: 20px; color: #bbb; font-style: italic; font-size: 13px;">
+                Belum ada riwayat pangkas untuk pelanggan ini.
             </div>
         <?php endif; ?>
     </div>
 
-    <form action="not-to-show/hapus_pelanggan.php" method="POST"
-          onsubmit="return confirm('Yakin ingin menghapus pelanggan ini?');">
-        <input type="hidden" name="id" value="<?= $data['id'] ?>">
-        <button type="submit" class="btn-danger">Hapus Pelanggan</button>
-    </form>
+    <a href="haircut.php?id_pelanggan=<?= $id ?>" class="btn-new-order">
+        + Pilih Gaya Rambut Baru
+    </a>
 </div>

@@ -1,0 +1,151 @@
+
+        :root {
+            --primary: #333333;
+            --accent: #00B4D8;
+            --bg-body: #f8f9fa;
+            --text-main: #2d3436;
+            --text-muted: #636e72;
+            --white: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .content { padding: 30px; }
+
+        .customer-wrapper {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Card Style */
+        .glass-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #edf2f7;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-left: 5px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        /* Kolom Kiri - Search & Result */
+        .customer-left { width: 40%; }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .search-box input:focus { border-color: var(--accent); }
+
+        .search-box button {
+            background: var(--primary);
+            color: var(--accent);
+            border: none;
+            padding: 0 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* Kolom Kanan - Form */
+        .customer-right { width: 60%; }
+
+        .form-group { margin-bottom: 18px; }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
+        .customer-form input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+            box-sizing: border-box;
+        }
+
+        /* Buttons */
+        .btn-detect {
+            background: #e2e8f0;
+            color: #4a5568;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: 0.2s;
+        }
+
+        .btn-detect:hover { background: #cbd5e0; }
+
+        .btn-submit {
+            background: var(--primary);
+            color: var(--accent);
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #000;
+            transform: translateY(-2px);
+        }
+
+        #status {
+            font-size: 0.85rem;
+            padding: 8px;
+            border-radius: 5px;
+            background: #f1f5f9;
+            text-align: center;
+        }
+
+        #hasil-foto {
+            display: block;
+            margin: 15px auto;
+            border: 4px solid var(--white);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 200px;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .customer-wrapper { flex-direction: column; }
+            .customer-left, .customer-right { width: 100%; }
+        }

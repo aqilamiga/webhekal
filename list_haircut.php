@@ -2,51 +2,45 @@
 require_once 'not-to-show/connect.php';
 require_once 'not-to-show/auth.php';
 
-// =========================================================
-// 1. HANDLER: TAMBAH DATA (Hanya jika Owner)
-// =========================================================
+$role = $_SESSION['role']; 
 $message = "";
+
 if (isset($_POST['btn_simpan']) && $role === 'owner') {
-    $nama = trim($_POST['nama']);
-    $bentukWajahInput = $_POST['bentuk_wajah'];
-    $deskripsiInput = $_POST['deskripsi'];
+    // 1. Ambil data dari form (Pastikan key-nya sama dengan atribut 'name' di HTML)
+    $nama_rambut = trim($_POST['nama_model']); 
+    $deskripsi   = trim($_POST['deskripsi']);
+    $wajah       = $_POST['bentuk_wajah'];
     
-    // Validasi file upload
-    $targetDir = "assets/img/model_rambut/" . $bentukWajahInput . "/";
-    
-    // Pastikan folder ada (jaga-jaga)
-    if (!is_dir($targetDir)) mkdir($targetDir, 0777, true);
+    // 2. Handler File Gambar
+    if (isset($_FILES['foto_rambut']) && $_FILES['foto_rambut']['error'] === 0) {
+        $targetDir = "assets/img/model_rambut/" . $wajah . "/";
+        $ext = strtolower(pathinfo($_FILES["foto_rambut"]["name"], PATHINFO_EXTENSION));
+        
+        // Kita beri nama file gambar sesuai nama haircut
+        $namaFileBaru = $nama_rambut . "." . $ext;
+        $targetFile = $targetDir . $namaFileBaru;
 
-    // Ambil ekstensi file yg diupload
-    $imageFileType = strtolower(pathinfo($_FILES["foto_rambut"]["name"], PATHINFO_EXTENSION));
-    
-    // Nama file baru disamakan dengan Nama Model (agar rapi sesuai logika sistem Anda)
-    // Contoh: "Comma Hair" -> "Comma Hair.jpg"
-    $newFileName = $nama . '.' . $imageFileType;
-    $targetFile = $targetDir . $newFileName;
+        // Buat folder jika belum ada
+        if (!is_dir($targetDir)) mkdir($targetDir, 0777, true);
 
-    // Cek apakah file gambar valid
-    $check = getimagesize($_FILES["foto_rambut"]["tmp_name"]);
-    if($check !== false) {
-        // Proses Upload
         if (move_uploaded_file($_FILES["foto_rambut"]["tmp_name"], $targetFile)) {
             
-            // Proses Insert Database
+            // 3. Query INSERT (Hanya 4 field sesuai struktur Anda)
+            // id biasanya AUTO_INCREMENT, jadi tidak perlu dimasukkan manual
             $stmt = $conn->prepare("INSERT INTO model_rambut (nama, deskripsi, bentuk_wajah) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $nama, $deskripsiInput, $bentukWajahInput);
+            $stmt->bind_param("sss", $nama_rambut, $deskripsi, $wajah);
             
             if ($stmt->execute()) {
-                // Refresh halaman agar data baru muncul (Post-Redirect-Get pattern sederhana)
                 header("Location: list_haircut.php?success=1");
                 exit();
             } else {
                 $message = "Gagal simpan ke database: " . $conn->error;
             }
         } else {
-            $message = "Gagal mengupload gambar.";
+            $message = "Gagal upload gambar ke folder.";
         }
     } else {
-        $message = "File bukan gambar.";
+        $message = "Silakan pilih foto.";
     }
 }
 
@@ -124,7 +118,7 @@ $folders = array_filter(glob($baseDir . '*'), 'is_dir');
         /* Layout Detail Modal */
         .modal-body { display: flex; flex-direction: column; }
         .modal-img-container { width: 100%; height: 300px; background: #eee; }
-        .modal-img-container img { width: 100%; height: 100%; object-fit: cover; }
+        .modal-img-container img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 8px 8px 0 0;}
         .modal-info { padding: 25px; }
         .modal-category { background: #e0f7fa; color: #006064; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
         .modal-desc { color: #666; line-height: 1.6; white-space: pre-wrap; margin-top: 15px;}

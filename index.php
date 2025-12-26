@@ -61,23 +61,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="./assets/css/login.css">
+    <link rel="stylesheet" href="assets/css/login.css">
 </head>
 
 <body>
-
-    <div class="container">
+    <div class="container" id="login-box">
+        <div class="image-side">
+            <img src="assets/img/index.jpg" alt="Barbershop Image">
+        </div>
         <div class="form-container sign-in">
             <form method="POST" autocomplete="off">
                 <h1>Masuk</h1>
-                <span>Gunakan akun yang telah disediakan staf</span>
+                <span>Gunakan akun staf Anda</span>
+                
                 <?php if ($error): ?>
-                    <p style="color:red; margin:10px 0;"> <?= htmlspecialchars($error) ?>
+                    <p style="color:red; margin:10px 0; font-size: 14px;"> 
+                        <?= htmlspecialchars($error) ?>
                     </p>
                 <?php endif; ?>
                 <input type="text" name="username" placeholder="Username" required>
                 <input type="password" name="password" placeholder="Password" required>
-                <a href="#">Jika lupa password, hubungi staf</a>
+                <a href="#">Lupa password? Hubungi Owner</a>
                 <button type="submit">Masuk</button>
             </form>
         </div>
